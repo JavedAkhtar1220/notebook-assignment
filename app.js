@@ -1,5 +1,6 @@
 
-var data = [];
+let data = [];
+let index;
 
 const addTodo = () => {
 
@@ -32,7 +33,7 @@ const addTodo = () => {
             <td>${v.title}</td>
             <td>${v.description}</td>
             <td>
-                <button class="btn btn-primary" onclick="editTodo(${i})">Edit</button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal(${i})">Edit</button>
                 <button class="btn btn-danger" onclick="deleteTodo(${i})">Delete</button>
             </td>
         </tr>
@@ -67,17 +68,28 @@ const deleteAllTodos = () => {
 
 }
 
-const editTodo = index => {
+const openModal = i => {
 
-    var title = prompt('Enter Title', data[index].title);
-    var description = prompt('Enter Description', data[index].description);
+    index = i;
+
+    document.getElementById("uTitle").value = data[i].title;
+    document.getElementById("uDescription").value = data[i].description;
+
+}
+
+
+const updateRecord = () => {
+
+    var title = document.getElementById("uTitle").value;
+    var description = document.getElementById("uDescription").value;
+
 
     if (title === "") {
-        title = prompt('Enter Title', data[index].title);
+        alert("Enter title");
         return
     }
     if (description === "") {
-        description = prompt('Enter Description', data[index].description);
+        alert("Enter Description");
         return
     }
 
@@ -97,13 +109,17 @@ const editTodo = index => {
             <td>${v.title}</td>
             <td>${v.description}</td>
             <td>
-                <button class="btn btn-primary" onclick="editTodo(${i})">Edit</button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal(${i})">Edit</button>
                 <button class="btn btn-danger" onclick="deleteTodo(${i})">Delete</button>
             </td>
         </tr>
 
         `
     ))
+
+    swal("Record Updated!");
+    document.getElementById("closeBtn").click();
+
 }
 
 const deleteTodo = index => {
@@ -128,7 +144,7 @@ const deleteTodo = index => {
                         <td>${v.title}</td>
                         <td>${v.description}</td>
                         <td>
-                            <button class="btn btn-primary" onclick="editTodo(${i})">Edit</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openModal(${i})">Edit</button>
                             <button class="btn btn-danger" onclick="deleteTodo(${i})">Delete</button>
                         </td>
                     </tr>
